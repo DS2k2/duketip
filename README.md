@@ -1,1 +1,2 @@
 # duketip
+vi readme
