@@ -4,8 +4,7 @@ def hangman_game():
     word_list = ['genius', 'orphanage', 'torched', 'tree', 'pizza'] # The word list
     word = numpy.random.choice(word_list) # Randomly chooses a word from the word list
     word_len=[]
-    n=-1
-
+    n=0
     for letter in word:
         word_len.append("_" )# Represents the amount of spaces in the word
     stage = 0
@@ -101,33 +100,27 @@ def hangman_game():
                 game = raw_input('Would you like to play hangman? y or n:')
             if game == 'y':
                 hangman_game()
-
     print word_len
     while stage < 7:
         guess_letter = ""
         while guess_letter == "": # Makes it so you have to input a letter
-            guess_letter = raw_input("Enter a letter please:")
+            guess_letter = raw_input("Enter one letter please:")
         l_list = guess_letter[0] # The list that stores the letters guessed
-        for l in word: # This for loop checks if the guessed letter is in the word and then replaces the corresponding space
+        for underscore in word_len: # This for loop checks if the guessed letter is in the word and then replaces the corresponding space
             if guess_letter[0] in word:
-                word_len[n]=guess_letter
-                print word_len
+                print l_list + word_len[n+1:]
                 print 'Good job! You have guessed:' + l_list
+                l_list = l_list + guess_letter[0]
                 break
             else:
-                print "  |------|"
-                print "  |      O"
-                print "  |"
-                print "  |"
-                print "  |"
-                print "  |"
-                print "  |--------------|"
-                print "  |              |"
+                stage=+1
+                print 'Wrong!'
+                print hangman_stage(stage)
                 print "Good guess! Try again!"
                 print "You have guessed:" + l_list
-                stage=+1
+                print word_len
                 break
-        l_list = l_list + guess_letter
+        l_list = l_list + guess_letter[0]
 
 intro = ""
 while intro == "":
