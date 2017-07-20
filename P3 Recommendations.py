@@ -77,9 +77,9 @@ movieDict = dict(zip(movieNames['id'], movieNames['name']))
 movieData = np.loadtxt('./ml-100k/u.data', dtype={'names': ('userID', 'movieID', 'rating'), 'formats': (np.int, np.int, np.int)},
                        delimiter="\t",  usecols = (0, 1, 2))
 
-#print(movieData)
-#print(movieNames)
-#print(movieDict)
+print(movieData)
+print(movieNames)
+print(movieDict)
 
  # Delete this after we finish phase 1, for now just get the data loaded
 
@@ -97,7 +97,7 @@ for row in movieData:
     if row['movieID'] not in movieRatingTemp:
         movieRatingTemp[row['movieID']] = []
     movieRatingTemp[row['movieID']].append(row['rating'])
-#print (movieRatingTemp)
+print (movieRatingTemp)
 # TODO For every row in the movie data, add the rating to a list in the dictionary entry
 # for that movies ID (don't forget to initialize the dictionary entry)
 
@@ -108,10 +108,10 @@ movieRatingCount = {} # TODO replace 0 with code for an empty
 for i in movieRatingTemp:
     movieRating[i] = np.mean(movieRatingTemp[i])
     i+=1
-#print (movieRating)
+print (movieRating)
 for i in movieRatingTemp:
     movieRatingCount[i] = len(movieRatingTemp[i])
-#print (movieRatingCount)
+print (movieRatingCount)
 # TODO Using numpy place the average rating for each movie in movieRating and the total number of ratings in movieRatingCount
 # Note: You will need a for loop to get each dictionary key
 # Get sorting ratings
@@ -121,12 +121,9 @@ print (movieRatingS)
 # Top 10 Movies
 print("Top Ten Movies:" )
 i = 0
-while i  <10:
-    for i in movieRatingS:
-        print (movieRatingS[i] + ', ' + movieNames[i, 0] + ', ' + movieData['movieID'], '', movieRating[i], + ', ' + movieRatingCount[i] )
-        i +=1
-
-
+for i in range(0, 10):
+    id = movieRatingS[i][0]
+    print (str(i+1) + ': ' + str(movieDict[id]) + '(ID: ' + str(id) + ') ' + 'Rating: ' + str(movieRatingS[i][1]) + ' Count: ' + str(movieRatingCount[id]))
 # TODO Print the top 10 movies
 # It should print the number, title, id, rating and count of reviews for each movie
 # ie 2. Someone Else's America (1995) (ID: 1599) Rating: 5.0 Count: 1
@@ -135,6 +132,15 @@ while i  <10:
 # Top 10 Movies with at least 100 ratings    
 print("\n\nTop Ten movies with at least 100 ratings:")
 # TODO It should print the same thing, but this time all the movies should have over 100 ratings
+i = 0
+printed = 0
+if movieRatingCount[id] >=100:
+    for i in range(0, 10):
+        id = movieRatingS[i][0]
+        print(str(i + 1) + ': ' + str(movieDict[id]) + '(ID: ' + str(id) + ') ' + 'Rating: ' + str(
+            movieRatingS[i][1]) + ' Count: ' + str(movieRatingCount[id]))
+        i += 1
+        printed += 1
 # The number should be the movie's absolute rank
 # ie (16. Close Shave, A (1995) (ID: 408) Rating: 4.49 Count: 112)
 # Number 16 is first in this list because it's the first movie with over 100 ratings
@@ -150,10 +156,10 @@ exit(0) # Remove this line after we finish phase 2
 # Create a numpy ndarray of zeros with demensions of max user id + 1 and max movie + 1 (because we'll use them as 1 indexed not zero indexed)
 
 # Find the max movie ID + 1
-maxMovie = 0 # TODO replace 0 with the correct code
+maxMovie = movieData['movieID'].max + 1 # TODO replace 0 with the correct code
 
 # Find the max user Id + 1
-maxUser = 0 # TODO replace 0 with the correct code
+maxUser = movieData['userID'].max + 1 # TODO replace 0 with the correct code
 
 # Create an array of 0s which will fill in with 1s when a user likes a movie
 userLikes = np.zeros((maxUser, maxMovie))
