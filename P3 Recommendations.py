@@ -7,16 +7,15 @@ import numpy as np
 
 def findSimilar(iLikeNp, userLikes):
     # Create an And similarity
-    similarityAnd = 0 # TODO replace 0 with the correct code
+    similarityAnd = iLikeNp * userLikes # TODO replace 0 with the correct code
     # Create a per user sum (this is the numerator of the jaccard index)
-    similarityAndSum = 0 # TODO replace 0 with the correct code
+    similarityAndSum = similarityAnd.sum(axis = 1) # TODO replace 0 with the correct code
     # Create an Or similarity
-    userSimilarityOr = 0 # TODO replace 0 with the correct code
+    userSimilarityOr = userLikes + iLikeNp - similarityAnd # TODO replace 0 with the correct code
     # Create a per user union sum (this is the denominator of the jaccard index)
-    similarityOrSum = 0 # TODO replace 0 with the correct code
-    
+    similarityOrSum = userSimilarityOr.sum(axis = 1) # TODO replace 0 with the correct code
     # Calculate the similarity
-    userSimilarity = 0 # TODO replace 0 with the correct code to calculate the Jaccard Index for each user
+    userSimilarity = similarityAndSum / similarityOrSum # TODO replace 0 with the correct code to calculate the Jaccard Index for each user
     
     # Make the most similar user has a new like that the previous user did not have
     # I used a while loop.
@@ -24,6 +23,12 @@ def findSimilar(iLikeNp, userLikes):
     # by setting the userSimilarity for them to 0
     # When you get the index, save it in the variable maxIndex
     # TODO Write the loop
+    userLikes[i] - iLikeNp
+
+
+
+
+
     
     # TODO Print the max similarity number (most times this is something like 0.17
     
@@ -134,18 +139,20 @@ print("\n\nTop Ten movies with at least 100 ratings:")
 # TODO It should print the same thing, but this time all the movies should have over 100 ratings
 i = 0
 printed = 0
-if movieRatingCount[id] >=100:
-    for i in range(0, 10):
-        id = movieRatingS[i][0]
+while printed <=10:
+    id = movieRatingS[i][0]
+    if movieRatingCount[id] >=100:
         print(str(i + 1) + ': ' + str(movieDict[id]) + '(ID: ' + str(id) + ') ' + 'Rating: ' + str(
             movieRatingS[i][1]) + ' Count: ' + str(movieRatingCount[id]))
-        i += 1
         printed += 1
+    i += 1
+
+
+
 # The number should be the movie's absolute rank
 # ie (16. Close Shave, A (1995) (ID: 408) Rating: 4.49 Count: 112)
 # Number 16 is first in this list because it's the first movie with over 100 ratings
 
-exit(0) # Remove this line after we finish phase 2
 
 ########################################################
 # Begin Phase 3
@@ -156,10 +163,10 @@ exit(0) # Remove this line after we finish phase 2
 # Create a numpy ndarray of zeros with demensions of max user id + 1 and max movie + 1 (because we'll use them as 1 indexed not zero indexed)
 
 # Find the max movie ID + 1
-maxMovie = movieData['movieID'].max + 1 # TODO replace 0 with the correct code
+maxMovie = movieData['movieID'].max() + 1 # TODO replace 0 with the correct code
 
 # Find the max user Id + 1
-maxUser = movieData['userID'].max + 1 # TODO replace 0 with the correct code
+maxUser = movieData['userID'].max() + 1 # TODO replace 0 with the correct code
 
 # Create an array of 0s which will fill in with 1s when a user likes a movie
 userLikes = np.zeros((maxUser, maxMovie))
@@ -167,6 +174,9 @@ userLikes = np.zeros((maxUser, maxMovie))
 # TODO Go through all the rows of the movie data.
 # If the user rated a movie as 4 or 5 set userLikes to 1 for that user and movie
 # Note: You'll need a for loop and an if statement
+for row in movieData:
+    if row['rating'] >= 4:
+        userLikes['userID','movieID'] = 1
 
 
 ########################################################
