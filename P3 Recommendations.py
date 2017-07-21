@@ -16,21 +16,18 @@ def findSimilar(iLikeNp, userLikes):
     similarityOrSum = userSimilarityOr.sum(axis = 1) # TODO replace 0 with the correct code
     # Calculate the similarity
     userSimilarity = similarityAndSum / similarityOrSum # TODO replace 0 with the correct code to calculate the Jaccard Index for each user
-    
+
     # Make the most similar user has a new like that the previous user did not have
     # I used a while loop.
     # You can "get rid" of a user that is most similar, but doesn't have any new likes
     # by setting the userSimilarity for them to 0
     # When you get the index, save it in the variable maxIndex
     # TODO Write the loop
-    userLikes[i] - iLikeNp
+    while True:
+        maxIndex = userSimilarity.argmax()
+        newLikes =
 
-
-
-
-
-    
-    # TODO Print the max similarity number (most times this is something like 0.17
+# TODO Print the max similarity number (most times this is something like 0.17
     
     # Return the index of the user which is the best match
     return maxIndex
@@ -139,7 +136,7 @@ print("\n\nTop Ten movies with at least 100 ratings:")
 # TODO It should print the same thing, but this time all the movies should have over 100 ratings
 i = 0
 printed = 0
-while printed <=10:
+while printed <=9:
     id = movieRatingS[i][0]
     if movieRatingCount[id] >=100:
         print(str(i + 1) + ': ' + str(movieDict[id]) + '(ID: ' + str(id) + ') ' + 'Rating: ' + str(
